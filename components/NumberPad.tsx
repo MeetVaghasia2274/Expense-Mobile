@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   key: {
     flex: 1,
     marginHorizontal: 4,
-    height: 60,
+    height: 52,
     borderRadius: 14,
     backgroundColor: COLORS.surface,
     alignItems: 'center',

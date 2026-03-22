@@ -5,7 +5,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   Modal,
-  SafeAreaView,
+  ScrollView,
+  Platform,
 } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import NumberPad from './NumberPad';
@@ -77,8 +78,13 @@ const LogSheet = forwardRef<LogSheetRef, LogSheetProps>(({ onSaved }, ref) => {
     >
       <View style={styles.modalOverlay}>
         <TouchableOpacity style={styles.modalBackdrop} onPress={() => setVisible(false)} activeOpacity={1} />
-        <SafeAreaView style={styles.sheetBg}>
-          <View style={styles.content}>
+        <View style={styles.sheetBg}>
+          <ScrollView
+            bounces={false}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.scrollContent}
+          >
+            <TouchableOpacity activeOpacity={1} style={styles.content}>
             <View style={styles.handleWrap}>
               <View style={styles.handle} />
             </View>
@@ -122,8 +128,9 @@ const LogSheet = forwardRef<LogSheetRef, LogSheetProps>(({ onSaved }, ref) => {
             >
               <Text style={styles.saveBtnText}>Save</Text>
             </TouchableOpacity>
-          </View>
-        </SafeAreaView>
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
       </View>
     </Modal>
   );
@@ -145,7 +152,10 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.surface,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
-    minHeight: '85%',
+    maxHeight: '92%',
+  },
+  scrollContent: {
+    flexGrow: 1,
   },
   handleWrap: {
     alignItems: 'center',
@@ -159,7 +169,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingBottom: 24,
+    paddingBottom: Platform.OS === 'ios' ? 40 : 24,
   },
   header: {
     paddingHorizontal: 20,
@@ -175,7 +185,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'center',
-    paddingVertical: 16,
+    paddingVertical: 10,
     paddingHorizontal: 20,
   },
   currency: {
@@ -208,11 +218,11 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   spacer: {
-    height: 16,
+    height: 12,
   },
   saveBtn: {
     marginHorizontal: 16,
-    paddingVertical: 18,
+    paddingVertical: 14,
     borderRadius: 16,
     backgroundColor: COLORS.accent,
     alignItems: 'center',
