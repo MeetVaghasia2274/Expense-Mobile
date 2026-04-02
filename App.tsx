@@ -24,7 +24,7 @@ const NAV_THEME = {
     notification: COLORS.accent,
   },
 };
-
+//default 
 export default function App() {
   useEffect(() => {
     initDB();
